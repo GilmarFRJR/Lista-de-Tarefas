@@ -6,14 +6,14 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const loginController = {
-  getToken: async (req, res) => {
+  getTokenUser: async (req, res) => {
     const data = req.body;
 
     const user = await loginModel.checksUser(data);
 
     if (user) {
       const token = JWT.sign(
-        { id: user.id, email: user.email },
+        { id: user.id, email: user.email, adm: user.adm },
         process.env.SECRET_KEY
       );
 

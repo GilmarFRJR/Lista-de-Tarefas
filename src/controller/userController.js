@@ -1,14 +1,19 @@
-import { taskModel } from "../model/taskModel.js";
 import { userModel } from "../model/userModel.js";
 
 export const userController = {
   getUsers: async (req, res) => {
     try {
-      const users = await userModel.getAll();
+      if (req.user.adm === true) {
+        const users = await userModel.getAll();
 
-      res.status(200).json(users);
+        res.status(200).json(users);
+      } else {
+        res.status(403).json({
+          erro: "Você não está autorizado a ver a lista de usuários.",
+        });
+      }
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error.message, teste: "teste" });
     }
   },
 
@@ -16,9 +21,15 @@ export const userController = {
     const id = parseInt(req.params.id);
 
     try {
-      const user = await userModel.getOne(id);
+      if (req.user.adm === true) {
+        const user = await userModel.getOne(id);
 
-      res.status(200).json(user);
+        res.status(200).json(user);
+      } else {
+        res.status(403).json({
+          erro: "Você não está autorizado a ver a lista de usuários.",
+        });
+      }
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

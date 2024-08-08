@@ -10,6 +10,7 @@ export const loginModel = {
       select: {
         id: true,
         email: true,
+        adm: true,
       },
     });
 

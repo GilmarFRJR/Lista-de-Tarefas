@@ -7,7 +7,6 @@ export const userModel = {
         name: true,
         email: true,
         password: true,
-        tasks: true,
       },
     });
   },
