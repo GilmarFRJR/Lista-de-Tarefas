@@ -5,6 +5,7 @@ export const taskModel = {
     return await db.Task.findMany({
       where: { userId },
       select: {
+        id: true,
         title: true,
         description: true,
         referenceImage: true,
@@ -13,10 +14,10 @@ export const taskModel = {
     });
   },
 
-  create: async (data) => {
+  create: async (userId, data) => {
     return await db.Task.create({
       data: {
-        userId: data.userId,
+        userId,
         title: data.title,
         description: data.description,
         referenceImage: data.referenceImage,
@@ -24,8 +25,9 @@ export const taskModel = {
     });
   },
 
-  edit: async () => {
+  edit: async (data) => {
     return await db.Task.update({
+      where: { id: data.id },
       data: {
         title: data.title,
         description: data.description,
@@ -43,10 +45,10 @@ export const taskModel = {
     });
   },
 
-  deleteOne: async (id) => {
+  deleteOne: async (taskId) => {
     return await db.Task.delete({
       where: {
-        id,
+        id: taskId,
       },
     });
   },

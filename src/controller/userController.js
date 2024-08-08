@@ -1,3 +1,4 @@
+import { taskModel } from "../model/taskModel.js";
 import { userModel } from "../model/userModel.js";
 
 export const userController = {
@@ -37,18 +38,16 @@ export const userController = {
     }
   },
 
-  concludeTask: async (req, res) => {
-    const id = parseInt(req.params.id);
-    const status = req.params.conclude;
-  },
-
   deleteUser: async (req, res) => {
-    const id = parseInt(req.params.id);
-
     try {
-      const user = await userModel.delete(id);
+      const user = await userModel.getOne(req.user.id);
 
-      res.json(200).json(user);
+      if (user) {
+        const userDelete = await userModel.delete(req.user.id);
+        res.status(200).json(userDelete);
+      } else {
+        res.status(404).json({ erro: "Esse usuário não existe." });
+      }
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
