@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+
 import { userModel } from "../model/userModel.js";
 
 export const userController = {
@@ -38,12 +40,15 @@ export const userController = {
   upsertUser: async (req, res) => {
     const data = req.body;
 
+    const salt = await bcrypt.genSalt(10);
+    data.password = await bcrypt.hash(data.password, salt);
+
     try {
       const user = await userModel.upsert(data);
 
       user
         ? res.status(201).json(user)
-        : res.json({ erro: "Email já está em uso." });
+        : res.status(409).json({ erro: "Email já está em uso." });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

@@ -23,7 +23,6 @@ model Task{
   userId Int
   title String
   description String?
-  referenceImage String?
   conclude Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

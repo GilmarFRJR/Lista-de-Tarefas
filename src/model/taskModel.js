@@ -20,7 +20,6 @@ export const taskModel = {
         userId,
         title: data.title,
         description: data.description,
-        referenceImage: data.referenceImage,
       },
     });
   },
@@ -31,7 +30,6 @@ export const taskModel = {
       data: {
         title: data.title,
         description: data.description,
-        referenceImage: data.referenceImage,
       },
     });
   },
